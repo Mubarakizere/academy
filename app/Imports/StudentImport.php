@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -18,7 +19,7 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
 
   public int $importedCount = 0;
 
-  public function model(array $row)
+  public function model(array $row): ?Model
   {
     $classroom = Classroom::where('name', $row['kelas'])->first();
 
