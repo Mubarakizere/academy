@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             AssignmentSeeder::class,
             ExaminationSeeder::class,
             AnnouncementSeeder::class,
+            CarouselSeeder::class,
+            StatSeeder::class,
+            ReviewSeeder::class,
+            CourseSeeder::class,
+            PromoCodeSeeder::class,
         ]);
     }
 }

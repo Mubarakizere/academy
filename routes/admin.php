@@ -11,11 +11,20 @@ use App\Livewire\Admin\TeacherIndex;
 use App\Http\Controllers\ImpersonateController;
 use Illuminate\Support\Facades\Route;
 
+use App\Livewire\Admin\CarouselIndex;
+use App\Livewire\Admin\StatIndex;
+use App\Livewire\Admin\ReviewIndex;
+use App\Livewire\Admin\CertificateIndex;
+
 Route::middleware(['auth', CheckBlockedUser::class, RoleMiddleware::class . ':admin'])
   ->prefix('admin')
   ->name('admin.')
   ->group(function () {
     Route::get('/', Dashboard::class)->name('dashboard');
+    Route::get('/carousels', CarouselIndex::class)->name('carousels.index');
+    Route::get('/stats', StatIndex::class)->name('stats.index');
+    Route::get('/reviews', ReviewIndex::class)->name('reviews.index');
+    Route::get('/certificates', CertificateIndex::class)->name('certificates.index');
     Route::get('/teachers', TeacherIndex::class)->name('teachers.index');
     Route::get('/students', StudentIndex::class)->name('students.index');
     Route::get('/classrooms', ClassroomIndex::class)->name('classrooms.index');

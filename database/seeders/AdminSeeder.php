@@ -7,16 +7,18 @@ use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
 {
-  public function run(): void
-  {
-    $admin = User::create([
-      'name' => 'Administrator',
-      'email' => 'admin@sekolah.id',
-      'password' => bcrypt('password'),
-      'phone' => '081234567890',
-      'is_active' => true,
-    ]);
+    public function run(): void
+    {
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@divahouse.com'],
+            [
+                'name' => 'Admissions Administrator',
+                'password' => bcrypt('password'),
+                'phone' => '+250780159059',
+                'is_active' => true,
+            ]
+        );
 
-    $admin->assignRole('admin');
-  }
+        $admin->assignRole('admin');
+    }
 }

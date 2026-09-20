@@ -43,4 +43,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
+
+    public function influencerProfile()
+    {
+        return $this->hasOne(InfluencerProfile::class);
+    }
+
+    public function promoCodes()
+    {
+        return $this->hasMany(PromoCode::class, 'influencer_id');
+    }
+
+    public function referredApplications()
+    {
+        return $this->hasMany(Application::class, 'influencer_id');
+    }
 }
