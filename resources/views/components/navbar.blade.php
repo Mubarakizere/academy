@@ -27,6 +27,7 @@
 {{-- ====== MAIN NAVBAR ====== --}}
 <nav x-data="{ open: false, scrolled: false }"
     @scroll.window="scrolled = (window.pageYOffset > 20)"
+    @keydown.escape.window="open = false"
     :class="scrolled ? 'shadow-md bg-white/95 backdrop-blur-xl border-b border-slate-200/90' : 'bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-xs'"
     class="sticky top-0 inset-x-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,9 +105,10 @@
             </div>
 
             {{-- Mobile Menu Button --}}
-            <button @click="open = !open"
-                class="md:hidden p-2.5 rounded-full text-slate-800 bg-slate-100 hover:bg-slate-200 focus:outline-none transition-colors border border-slate-200/80 shadow-xs"
-                aria-label="Toggle Navigation Menu">
+            <button type="button" @click="open = !open"
+                class="md:hidden p-2.5 rounded-full text-slate-800 bg-slate-100 hover:bg-slate-200 focus:outline-none transition-colors border border-slate-200/80 shadow-xs cursor-pointer"
+                aria-label="Toggle Navigation Menu"
+                :aria-expanded="open.toString()">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     <path x-show="open" x-cloak stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
