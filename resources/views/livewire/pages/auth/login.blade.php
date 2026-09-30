@@ -77,7 +77,7 @@ new #[Layout('layouts.guest')] class extends Component {
                             d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                     </svg>
                 </div>
-                <input wire:model="form.password" id="password" name="password" :type="show ? 'text' : 'password'" required
+                <input wire:model="form.password" type="password" id="password" name="password" :type="show ? 'text' : 'password'" required
                     autocomplete="current-password" placeholder="••••••••••••"
                     class="block w-full pl-10 pr-10 py-3 text-xs font-semibold rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition bg-slate-50/50">
                 <button type="button" @click="show = !show"
@@ -127,6 +127,7 @@ new #[Layout('layouts.guest')] class extends Component {
         </p>
         <div class="grid grid-cols-2 gap-2">
             <button type="button"
+                @click="document.getElementById('email').value='admin@divahouse.com'; document.getElementById('password').value='password'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
                 wire:click="autofill('admin@divahouse.com', 'password')"
                 class="flex items-center justify-center gap-2 rounded-xl border border-slate-200 py-2.5 px-3 text-xs font-bold text-slate-800 hover:bg-slate-50 transition">
                 <svg class="w-4 h-4 text-slate-700" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -136,6 +137,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </button>
 
             <button type="button"
+                @click="document.getElementById('email').value='influencer@divahouse.com'; document.getElementById('password').value='password'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
                 wire:click="autofill('influencer@divahouse.com', 'password')"
                 class="flex items-center justify-center gap-2 rounded-xl border border-slate-200 py-2.5 px-3 text-xs font-bold text-amber-800 hover:bg-amber-50 transition">
                 <svg class="w-4 h-4 text-amber-700" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">

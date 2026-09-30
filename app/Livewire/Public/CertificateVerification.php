@@ -11,6 +11,15 @@ class CertificateVerification extends Component
     public bool $searched = false;
     public ?int $selectedId = null;
 
+    public function mount(?string $cert = null, ?string $q = null): void
+    {
+        $term = $cert ?: ($q ?: request('cert', request('q', '')));
+        if (!empty($term)) {
+            $this->query = trim((string)$term);
+            $this->searchCertificates();
+        }
+    }
+
     public function searchCertificates(): void
     {
         $this->query = trim($this->query);

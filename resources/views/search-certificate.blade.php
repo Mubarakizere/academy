@@ -9,14 +9,73 @@
         content="Search and verify graduate certificates and credentials from Diva House Beauty Academy (Rwanda & Kenya). Authenticate alumni training in Lashes Artistry & Pro Makeup.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap"
         rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <style>
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, .font-heading { font-family: 'Outfit', sans-serif; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+            nav, footer, .no-print, button, form {
+                display: none !important;
+            }
+            section:not(#certificate-section) {
+                display: none !important;
+            }
+            #certificate-section {
+                padding: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                background: white !important;
+            }
+            .max-w-7xl, .max-w-6xl {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #certificate-printable-wrapper {
+                padding: 0 !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                overflow: visible !important;
+            }
+            #certificate-printable-card {
+                width: 297mm !important;
+                height: 210mm !important;
+                max-width: 297mm !important;
+                max-height: 210mm !important;
+                margin: 0 auto !important;
+                box-shadow: none !important;
+                border: none !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
     </style>
+    {{-- html2canvas & jsPDF for 100% reliable 1-click A4 Landscape PDF downloads --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body class="antialiased bg-slate-50/50 text-slate-900 selection:bg-yellow-400 selection:text-slate-950">
@@ -25,13 +84,13 @@
     <x-navbar />
 
     {{-- ====== HERO & VERIFICATION SEARCH ====== --}}
-    <section class="bg-gradient-to-b from-amber-500/5 via-slate-50/60 to-white pt-14 pb-16 border-b border-slate-200/80 relative overflow-hidden">
+    <section id="certificate-section" class="bg-gradient-to-b from-amber-500/5 via-slate-50/60 to-white pt-14 pb-16 border-b border-slate-200/80 relative overflow-hidden">
         {{-- Ambient background glows --}}
-        <div class="absolute top-0 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none no-print"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 relative z-10">
             
-            <div class="text-center space-y-3.5 max-w-3xl mx-auto">
+            <div class="text-center space-y-3.5 max-w-3xl mx-auto no-print">
                 <div class="inline-flex items-center gap-2 bg-amber-400/15 text-amber-900 rounded-full px-4 py-1.5 border border-amber-400/30 font-extrabold text-xs uppercase tracking-widest shadow-xs">
                     <svg class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -48,7 +107,7 @@
 
             {{-- LIVEWIRE CERTIFICATE SEARCH COMPONENT --}}
             <div class="pt-2">
-                @livewire('public.certificate-verification')
+                @livewire('public.certificate-verification', ['cert' => request('cert'), 'q' => request('q')])
             </div>
 
         </div>
