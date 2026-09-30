@@ -153,7 +153,7 @@
                                         <div class="flex justify-center">
                                             <img src="{{ asset('images/certificates/header-logo-transparent.png') }}"
                                                 alt="Diva House Beauty"
-                                                class="h-14 sm:h-18 md:h-20 max-h-[85px] object-contain">
+                                                class="object-contain" style="height: 72px; max-height: 85px;">
                                         </div>
 
                                         {{-- Certificate Title --}}
@@ -206,7 +206,7 @@
                                         
                                         {{-- LEFT: Dynamic Scannable QR Code Box --}}
                                         <div class="col-span-3 flex flex-col items-center pl-2">
-                                            <div class="w-20 sm:w-24 md:w-28 aspect-square bg-white border border-slate-900 p-1 shadow-xs flex items-center justify-center">
+                                            <div class="aspect-square bg-white border border-slate-900 p-1 shadow-xs flex items-center justify-center" style="width: 100px;">
                                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data={{ urlencode('https://academy.divahousebeauty.com/search-certificate?cert=' . $selectedCert->certificate_number) }}"
                                                     alt="Scan to verify: {{ $selectedCert->certificate_number }}"
                                                     class="w-full h-full object-contain" crossorigin="anonymous">
@@ -228,14 +228,14 @@
                                                 Diva House Beauty
                                             </p>
                                             <p class="text-[10px] sm:text-xs text-slate-600 font-medium">
-                                                Presented on {{ $selectedCert->issue_date?->format('F d, Y') ?? 'September 24, 2026' }}
+                                                Presented on {{ $selectedCert->issue_date ? strtolower($selectedCert->issue_date->format('F')) . ' ' . $selectedCert->issue_date->format('d, Y') : 'september 24, 2026' }}
                                             </p>
 
                                             {{-- Stamp & Signature of Olivier Niyikiza --}}
                                             <div class="pt-1">
                                                 <img src="{{ asset('images/certificates/stamp-signature-transparent.png') }}"
                                                     alt="Stamp & Signature: Olivier Niyikiza, Managing Director"
-                                                    class="w-48 sm:w-60 md:w-68 max-w-[280px] object-contain mx-auto -mt-1.5">
+                                                    class="object-contain mx-auto -mt-1.5" style="width: 240px; max-width: 280px;">
                                             </div>
                                         </div>
 
@@ -243,7 +243,7 @@
                                         <div class="col-span-3 flex justify-center items-center pr-2">
                                             <img src="{{ asset('images/certificates/gold-seal-transparent.png') }}"
                                                 alt="Official Gold Accreditation Seal"
-                                                class="w-18 sm:w-22 md:w-26 max-w-[120px] object-contain drop-shadow-md">
+                                                class="object-contain drop-shadow-md" style="width: 96px; max-width: 120px;">
                                         </div>
 
                                     </div>
