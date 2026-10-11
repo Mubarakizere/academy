@@ -20,11 +20,13 @@ class Certificate extends Model
         'location',
         'is_valid',
         'notes',
+        'supporting_documents',
     ];
 
     protected $casts = [
         'issue_date' => 'date',
         'is_valid' => 'boolean',
+        'supporting_documents' => 'array',
     ];
 
     public function course()

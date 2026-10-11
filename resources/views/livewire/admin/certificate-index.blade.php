@@ -128,7 +128,7 @@
     {{-- Issue / Edit Certificate Form Modal --}}
     @if($showForm)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-            <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-xl w-full p-6 sm:p-8 space-y-6 animate-in fade-in zoom-in duration-200">
+            <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6 animate-in fade-in zoom-in duration-200">
                 
                 <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                     <div>
@@ -221,6 +221,44 @@
                             class="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-amber-400 outline-none">
                         @error('location') <span class="text-rose-500 font-bold text-[10px] mt-1 block">{{ $message }}</span> @enderror
                     </div>
+
+                    {{-- Public supporting video links --}}
+                    <section class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                            <div>
+                                <h4 class="text-xs font-extrabold text-slate-800">Supporting documents <span class="font-medium text-slate-400">(optional)</span></h4>
+                                <p class="text-[11px] text-slate-500 mt-1">Add public video links showing the student’s practice, progress or final assessment.</p>
+                            </div>
+                            <button type="button" wire:click="addSupportingDocument" @disabled(count($supporting_documents) >= 10)
+                                class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-amber-300 hover:text-amber-700 font-bold text-[10px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span class="text-sm leading-none">+</span> Add video link
+                            </button>
+                        </div>
+
+                        @error('supporting_documents') <p class="text-rose-500 font-bold text-[10px]">{{ $message }}</p> @enderror
+                        @forelse($supporting_documents as $index => $document)
+                            <div wire:key="supporting-document-{{ $index }}" class="grid grid-cols-1 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)_auto] gap-2 items-start rounded-xl bg-white border border-slate-200 p-3">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 mb-1">Label</label>
+                                    <input type="text" wire:model="supporting_documents.{{ $index }}.title" maxlength="100" placeholder="Final practical exam"
+                                        class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:bg-white focus:ring-2 focus:ring-amber-400 outline-none">
+                                    @error("supporting_documents.$index.title") <span class="text-rose-500 font-bold text-[10px] mt-1 block">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 mb-1">Video URL</label>
+                                    <input type="url" wire:model="supporting_documents.{{ $index }}.url" maxlength="2048" placeholder="https://youtu.be/..."
+                                        class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:bg-white focus:ring-2 focus:ring-amber-400 outline-none">
+                                    @error("supporting_documents.$index.url") <span class="text-rose-500 font-bold text-[10px] mt-1 block">{{ $message }}</span> @enderror
+                                </div>
+                                <button type="button" wire:click="removeSupportingDocument({{ $index }})" aria-label="Remove supporting video link"
+                                    class="sm:mt-5 justify-self-end sm:justify-self-auto px-3 py-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 text-[10px] font-bold transition-colors">
+                                    Remove
+                                </button>
+                            </div>
+                        @empty
+                            <p class="rounded-xl border border-dashed border-slate-300 bg-white px-4 py-3 text-[11px] text-slate-500">No links added. The public certificate page will only show this section when links are available.</p>
+                        @endforelse
+                    </section>
 
                     {{-- Status Switch --}}
                     <div class="pt-2">

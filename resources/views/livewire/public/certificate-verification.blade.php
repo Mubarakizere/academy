@@ -274,6 +274,32 @@
                             </div>
                         </div>
 
+                        @if(!empty($selectedCert->supporting_documents))
+                            <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden no-print" aria-labelledby="supporting-documents-heading">
+                                <div class="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                                    <div>
+                                        <h3 id="supporting-documents-heading" class="text-sm font-black text-slate-900 font-heading">Supporting documents</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5">Videos shared by the academy showing {{ $selectedCert->student_name }}’s training and practical work.</p>
+                                    </div>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ count($selectedCert->supporting_documents) }} {{ count($selectedCert->supporting_documents) === 1 ? 'link' : 'links' }}</span>
+                                </div>
+                                <ul class="divide-y divide-slate-100">
+                                    @foreach($selectedCert->supporting_documents as $document)
+                                        <li class="px-5 py-3 flex items-center justify-between gap-4">
+                                            <span class="text-xs font-semibold text-slate-700">{{ $document['title'] ?? 'View video' }}</span>
+                                            <a href="{{ $document['url'] ?? '#' }}" target="_blank" rel="noopener noreferrer"
+                                                class="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 px-3.5 py-2 text-[10px] font-extrabold text-amber-400 transition-colors">
+                                                Watch video
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H18m0 0v4.5M18 6l-7.5 7.5M19.5 12.75v4.125c0 1.036-.84 1.875-1.875 1.875H6.375A1.875 1.875 0 014.5 16.875V5.625c0-1.036.84-1.875 1.875-1.875H10.5" />
+                                                </svg>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </section>
+                        @endif
+
                     </div>
                 @endif
 

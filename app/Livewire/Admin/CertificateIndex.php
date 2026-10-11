@@ -27,6 +27,7 @@ class CertificateIndex extends Component
     public string $location = 'Kigali Flagship Hub (Rwanda)';
     public bool $is_valid = true;
     public string $notes = '';
+    public array $supporting_documents = [];
 
     protected function rules(): array
     {
@@ -41,6 +42,9 @@ class CertificateIndex extends Component
             'location' => 'required|string|max:255',
             'is_valid' => 'boolean',
             'notes' => 'nullable|string|max:1000',
+            'supporting_documents' => 'nullable|array|max:10',
+            'supporting_documents.*.title' => 'required|string|max:100',
+            'supporting_documents.*.url' => ['required', 'url', 'regex:/^https?:\/\/\S+$/i', 'max:2048'],
         ];
     }
 
@@ -53,7 +57,7 @@ class CertificateIndex extends Component
 
     public function create(): void
     {
-        $this->reset(['student_name', 'student_email', 'course_name', 'course_id', 'editingId', 'notes']);
+        $this->reset(['student_name', 'student_email', 'course_name', 'course_id', 'editingId', 'notes', 'supporting_documents']);
         $this->generateCode();
         $this->issue_date = date('Y-m-d');
         $this->grade = 'Certified Specialist';
@@ -76,7 +80,22 @@ class CertificateIndex extends Component
         $this->location = $cert->location;
         $this->is_valid = $cert->is_valid;
         $this->notes = $cert->notes ?? '';
+        $this->supporting_documents = $cert->supporting_documents ?? [];
         $this->showForm = true;
+    }
+
+    public function addSupportingDocument(): void
+    {
+        if (count($this->supporting_documents) < 10) {
+            $this->supporting_documents[] = ['title' => '', 'url' => ''];
+        }
+    }
+
+    public function removeSupportingDocument(int $index): void
+    {
+        unset($this->supporting_documents[$index]);
+        $this->supporting_documents = array_values($this->supporting_documents);
+        $this->resetValidation('supporting_documents');
     }
 
     public function updatedCourseId($val): void
@@ -91,6 +110,14 @@ class CertificateIndex extends Component
 
     public function save(): void
     {
+        $this->supporting_documents = array_values(array_filter(array_map(
+            fn ($document) => [
+                'title' => is_array($document) ? trim((string) ($document['title'] ?? '')) : '',
+                'url' => is_array($document) ? trim((string) ($document['url'] ?? '')) : '',
+            ],
+            $this->supporting_documents,
+        ), fn ($document) => $document['title'] !== '' || $document['url'] !== ''));
+
         $this->validate();
 
         $data = [
@@ -104,6 +131,7 @@ class CertificateIndex extends Component
             'location' => trim($this->location),
             'is_valid' => $this->is_valid,
             'notes' => trim($this->notes),
+            'supporting_documents' => $this->supporting_documents,
         ];
 
         if ($this->editingId) {
