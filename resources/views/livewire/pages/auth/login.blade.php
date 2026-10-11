@@ -28,11 +28,6 @@ new #[Layout('layouts.guest')] class extends Component {
         }
     }
 
-    public function autofill(string $email, string $password): void
-    {
-        $this->form->email = $email;
-        $this->form->password = $password;
-    }
 }; ?>
 
 <div class="space-y-6">
@@ -120,31 +115,4 @@ new #[Layout('layouts.guest')] class extends Component {
         </button>
     </form>
 
-    {{-- Quick Access Autofill --}}
-    <div class="border-t border-slate-100 pt-5 space-y-3">
-        <p class="text-xs font-extrabold text-slate-700 uppercase tracking-wider text-center">
-            Quick Portal Access
-        </p>
-        <div class="grid grid-cols-2 gap-2">
-            <button type="button"
-                @click="document.getElementById('email').value='admin@divahouse.com'; document.getElementById('password').value='password'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
-                wire:click="autofill('admin@divahouse.com', 'password')"
-                class="flex items-center justify-center gap-2 rounded-xl border border-slate-200 py-2.5 px-3 text-xs font-bold text-slate-800 hover:bg-slate-50 transition">
-                <svg class="w-4 h-4 text-slate-700" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-                <span>Admin Portal</span>
-            </button>
-
-            <button type="button"
-                @click="document.getElementById('email').value='influencer@divahouse.com'; document.getElementById('password').value='password'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
-                wire:click="autofill('influencer@divahouse.com', 'password')"
-                class="flex items-center justify-center gap-2 rounded-xl border border-slate-200 py-2.5 px-3 text-xs font-bold text-amber-800 hover:bg-amber-50 transition">
-                <svg class="w-4 h-4 text-amber-700" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
-                </svg>
-                <span>Influencer Partner</span>
-            </button>
-        </div>
-    </div>
 </div>
