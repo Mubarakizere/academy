@@ -36,13 +36,16 @@ class RolePermissionSeeder extends Seeder
     foreach ($permissionGroups as $group => $actions) {
       foreach ($actions as $action) {
         $name = "{$group}.{$action}";
-        Permission::create(['name' => $name]);
+        Permission::firstOrCreate([
+          'name' => $name,
+          'guard_name' => 'web',
+        ]);
         $allPermissions[] = $name;
       }
     }
 
     // Create roles and assign permissions
-    $admin = Role::create(['name' => 'admin']);
+    $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
     $admin->givePermissionTo($allPermissions);
 
     // Guru permissions
@@ -61,7 +64,7 @@ class RolePermissionSeeder extends Seeder
       return in_array($group, $guruGroups);
     })->merge($guruExtra)->unique()->values()->all();
 
-    $guru = Role::create(['name' => 'guru']);
+    $guru = Role::firstOrCreate(['name' => 'guru', 'guard_name' => 'web']);
     $guru->givePermissionTo($guruPermissions);
 
     // Siswa permissions
@@ -74,7 +77,7 @@ class RolePermissionSeeder extends Seeder
       'announcement.view',
       'analytics.view',
     ];
-    $siswa = Role::create(['name' => 'siswa']);
+    $siswa = Role::firstOrCreate(['name' => 'siswa', 'guard_name' => 'web']);
     $siswa->givePermissionTo($siswaPermissions);
   }
 }
