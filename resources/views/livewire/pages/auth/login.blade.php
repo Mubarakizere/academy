@@ -72,8 +72,8 @@ new #[Layout('layouts.guest')] class extends Component {
                             d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                     </svg>
                 </div>
-                <input wire:model.live.debounce.300ms="form.password" type="password" id="password" name="password" :type="show ? 'text' : 'password'" required
-                    autocomplete="current-password" placeholder="••••••••••••"
+                <input wire:model="form.password" type="password" id="password" name="password" :type="show ? 'text' : 'password'" required
+                    autocomplete="current-password" placeholder="Enter your password"
                     class="block w-full pl-10 pr-10 py-3 text-xs font-semibold rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition bg-slate-50/50">
                 <button type="button" @click="show = !show"
                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
